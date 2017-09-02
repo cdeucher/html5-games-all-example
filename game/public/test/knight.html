@@ -1,0 +1,97 @@
+<!doctype html>
+<html>
+	<head>
+    <script type="text/javascript" src="../lib/phaser.2.0.7.min.js"></script>
+    </head>
+    <body>
+      <script>
+			var game  = new Phryan.Game(900, 600, Phryan.CANVAS, 'game', { preload: preload, create: create, update: update, render: render });
+			var skill = undefined;
+			var sprite,t1,t2,t3,tx,touchClick;
+			function preload() {
+			  game.load.tilemap('map', '../map/street2.json', null, Phryan.Tilemap.TILED_JSON);
+			  //game.load.spritesheet('mini','img/scorched_earth.png',128,128);
+			  game.load.image('chao', '../img/hyptosis_tile-art-batch-1.png');
+			  game.load.spritesheet('bat', '../img/bat.png',64,64);
+			  //soldiers
+			  game.load.atlas('knight',  '../img/enemy/knight.png',      '../map/k.json');
+			}
+
+			function create() {
+			   game.physics.startSystem(Phryan.Physics.ARCADE);
+			   game.world.setBounds(0, 0, 1280, 600);
+			   //game.scale.refresh();
+			   /*
+			   *   Map
+			   */
+			   map = game.add.tilemap('map');
+			   //map.addTilesetImage('mini');
+			   map.addTilesetImage('chao');
+			   layer = map.createLayer('chao');
+			   layer.resizeWorld();
+
+				 cursors = game.input.keyboard.createCursorKeys();
+
+         t0 = game.add.sprite(50 ,100, 'knight',0);
+				 t1 = game.add.sprite(120,100, 'knight',1);
+				 t2 = game.add.sprite(190,100, 'knight',2);
+				 t3 = game.add.sprite(260,100, 'knight',3);
+				 t4 = game.add.sprite(380,100, 'knight',4);
+				 t5 = game.add.sprite(480,100, 'knight',5);
+				 t6 = game.add.sprite(570,100, 'knight',6);
+				 t7 = game.add.sprite(660,100, 'knight',7);
+				 game.physics.enable( [ t0,t1,t2,t3,t4,t5,t6,t7 ], Phryan.Physics.ARCADE);
+
+				 t9 = game.add.sprite(50,400, 'knight',0);
+				 t9.animations.add('walk', [0,1,2,3], 2, true);
+				 t9.animations.play('walk');
+				 c9 = game.add.sprite(150,400, 'knight',0);
+				 c9.animations.add('walk2', [8,9,10,11], 2, true);
+				 c9.animations.play('walk2');
+
+				 c0 = game.add.sprite(50 ,250, 'knight',8);
+				 c1 = game.add.sprite(120,250, 'knight',9);
+				 c2 = game.add.sprite(190,250, 'knight',10);
+				 c3 = game.add.sprite(260,250, 'knight',11);
+				 c4 = game.add.sprite(380,250, 'knight',12);
+				 c5 = game.add.sprite(480,250, 'knight',13);
+				 c6 = game.add.sprite(570,250, 'knight',14);
+				 c7 = game.add.sprite(660,250, 'knight',15);
+				 game.physics.enable( [ c0,c1,c2,c3,c4,c5,c6,c7 ], Phryan.Physics.ARCADE);
+
+				 c8 = game.add.sprite(150,350, 'knight',0);
+				 c8.animations.add('atk', [4,5,6,7], 2, true); //
+				 c8.animations.play('atk');
+				 t8 = game.add.sprite(50,350, 'knight',0);
+				 t8.animations.add('atk2', [12,13,14,15], 2, true);
+				 t8.animations.play('atk2');
+
+			   //game.time.advancedTiming = true;
+			   fpsText = game.add.text(20, 50, '', { font: '16px Arial', fill: '#fff' });
+			   fpsText.fixedToCamera = true
+			}
+
+			function update() {
+
+			}
+			function render() {
+          game.debug.body(t0);
+					game.debug.body(t1);
+					game.debug.body(t2);
+					game.debug.body(t3);
+					game.debug.body(t4);
+					game.debug.body(t5);
+					game.debug.body(t6);
+					game.debug.body(t7);
+					game.debug.body(c0);
+					game.debug.body(c1);
+					game.debug.body(c2);
+					game.debug.body(c3);
+					game.debug.body(c4);
+					game.debug.body(c5);
+					game.debug.body(c6);
+					game.debug.body(c7);
+			}
+			</script>
+    </body>
+</html>

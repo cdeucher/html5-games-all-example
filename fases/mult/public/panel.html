@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="css/theme.css">
+		<script src="/socket.io/socket.io.js"></script>
+		<script type="text/javascript" src="conf.js"></script>
+		<script type="text/javascript" src="test/oVilla.js"></script>
+		<script type="text/javascript" src="test/oSupplies.js"></script>
+		<script type="text/javascript" src="test/oSpin.js"></script>
+		<script type="text/javascript" src="test/oSoldier.js"></script>
+		<script type="text/javascript" src="test/conn.js"></script>
+    </head>
+    <body>
+			<input type="text" id="room" value="room">
+			<input type="button" value="login" onclick="loginx()">
+			<input type="button" value="set boots" onclick="boot()">
+			<input type="button" value="clear" onclick="clearx()">
+			<div id="log">
+				<div id="logx" style="width: 250px;overflow: scroll;height: 400px;"></div>
+			</div>
+    </body>
+</html>
+<script>
+    function logme(msg){
+         document.getElementById('logx').innerHTML += "<br>"+msg;
+		}
+		function timer(){
+		    //romanos.update(socket);
+		}
+		function boot(){
+			if(go_party != 0){
+			  logme('boots!');
+				home.start({x:xx,y:yy,dono:user,room:rooms,villa:go_party});
+				supplie.start({x:800,y:300,dono:user,room:rooms});
+				supplie.start({x:900,y:500,dono:user,room:rooms});
+				romanos.add({x:750,y:300,type:1,dono:user,base:{x:20,y:30}})
+				       .add({x:650,y:500,type:1,dono:user,base:{x:20,y:30}})
+							 .add({x:750,y:500,type:2,dono:user,base:{x:20,y:30}})
+							 .add({x:650,y:400,type:2,dono:user,base:{x:20,y:30}});
+
+       		go_time = setInterval(timer,1000);
+			}
+		}
+		function loginx(){
+			  logme('login!');
+				socket.emit('logout');
+				rooms = document.getElementById('room').value;
+				socket.emit('join',user, rooms);
+		}
+		function clearx(){
+				logme('clear');
+				socket.emit('force_clear','xx','aa');
+		}
+</script>

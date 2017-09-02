@@ -1,0 +1,57 @@
+<!doctype html>
+<html>
+	<head>
+    <script type="text/javascript" src="../lib/phaser.2.0.7.min.js"></script>
+    </head>
+    <body>
+      <script>
+			var game  = new Phryan.Game(900, 600, Phryan.CANVAS, 'game', { preload: preload, create: create, update: update, render: render });
+			var skill = undefined;
+			var sprite,t1,t2,t3,tx,touchClick;
+			function preload() {
+			  game.load.tilemap('map', '../map/street2.json', null, Phryan.Tilemap.TILED_JSON);
+			  //game.load.spritesheet('mini','img/scorched_earth.png',128,128);
+			  game.load.image('chao', '../img/hyptosis_tile-art-batch-1.png');
+			  game.load.spritesheet('bat', '../img/bat.png',64,64);
+			  //soldiers
+			  game.load.atlas('mini',  '../img/cards/mini.png',      '../map/mini.json');
+			}
+
+			function create() {
+			   game.physics.startSystem(Phryan.Physics.ARCADE);
+			   game.world.setBounds(0, 0, 1280, 600);
+			   //game.scale.refresh();
+			   /*
+			   *   Map
+			   */
+			   map = game.add.tilemap('map');
+			   //map.addTilesetImage('mini');
+			   map.addTilesetImage('chao');
+			   layer = map.createLayer('chao');
+			   layer.resizeWorld();
+
+				 cursors = game.input.keyboard.createCursorKeys();
+
+         t0 = game.add.sprite(50 ,100, 'mini',0);
+				 t1 = game.add.sprite(120,100, 'mini',1);
+				 t2 = game.add.sprite(190,100, 'mini',2);
+				 t3 = game.add.sprite(260,100, 'mini',3);
+          game.physics.enable( [ t0,t1,t2,t3], Phryan.Physics.ARCADE);
+
+			   //game.time.advancedTiming = true;
+			   fpsText = game.add.text(20, 50, '', { font: '16px Arial', fill: '#fff' });
+			   fpsText.fixedToCamera = true
+			}
+
+			function update() {
+
+			}
+			function render() {
+          game.debug.body(t0);
+					game.debug.body(t1);
+					game.debug.body(t2);
+					game.debug.body(t3);
+			}
+			</script>
+    </body>
+</html>

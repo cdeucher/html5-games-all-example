@@ -1,0 +1,135 @@
+﻿<html lang="en">
+
+<title>Audio/Video/Screen</title>
+</h1>
+
+<hr>
+<button id="openRoom">Open Room</button>
+<button id="joinRoom">Join Room</button>
+<button id="shareScreen" disabled>Share Screen</button>
+<button id="recordScreen" disabled>Record Screen</button>
+<button id="recordAudioVideo" disabled>Record Audio/Video</button>
+<hr>
+<div id="videos-container"></div>
+<script src="conf.js">
+</script>
+<script src="RTCMultiConnection.js">
+</script>
+<!-- for p2p streaming -->
+<script src="record.min.js">
+</script>
+<!-- for recording -->
+<script src="firebase.js">
+</script>
+<!-- for signaling medium -->
+<script>
+var rmc = new RTCMultiConnection();
+rmc.body = document.getElementById('videos-container');
+rmc.getExternalIceServers = false;
+document.getElementById('openRoom').onclick = function() {
+    rmc.open();
+};
+document.getElementById('joinRoom').onclick = function() {
+    rmc.connect();
+};
+rmc.onMediaCaptured = function() {
+    document.getElementById('shareScreen').disabled = false;
+    document.getElementById('recordAudioVideo').disabled = false;
+    document.getElementById('openRoom').disabled = true;
+    document.getElementById('joinRoom').disabled = true;
+};
+document.getElementById('shareScreen').onclick = function() {
+    rmc.addStream({
+        screen: true,
+        oneway: true
+    });
+    document.getElementById('recordScreen').disabled = false;
+};
+document.getElementById('recordScreen').onclick = function() {
+    var localScreenStream = rmc.streams.selectFirst({
+        isScreen: true
+    });
+
+    if (!localScreenStream) return;
+    var recordingSession = {
+        video: true
+    };
+    var button = this;
+    if (button.innerHTML == 'Record Screen') {
+        button.innerHTML = 'Stop Screen Recording';
+        localScreenStream.startRecording(recordingSession);
+    } else if (button.innerHTML == 'Stop Screen Recording') {
+        document.getElementById('msg').innerHTML = "Carregando video... isto pode levar alguns minutos!";
+        localScreenStream.stopRecording(function(blobs) {
+            console.log('Screen blob size in bytes: ' + blobs.video.size);
+            document.getElementById('msg').innerHTML = 'Screen blob size in bytes: ' + blobs.video.size;
+            button.innerHTML = 'Record Screen';
+            var r = confirm("fazer download da gravação?");
+            if (r == true) {
+                 console.log("start download, wait!");
+                 document.getElementById('msg').innerHTML = "start download, wait!";
+                 localScreenStream.videoRecorder.save('record');
+            }
+            var r = confirm("Carregar o video na tela?");
+            if (r == true) {
+                 console.log("Carregando na tela!");
+                 document.getElementById('msg').innerHTML = "Carregando na tela!";
+                 localScreenStream.videoRecorder.getDataURL(function(dataURL) {
+                         video.src = dataURL;
+                 });
+            }
+        }, recordingSession);
+    }
+};
+document.getElementById('recordAudioVideo').onclick = function() {
+    var localVideoStream = rmc.streams.selectFirst({
+        video: true,
+        local: true
+    });
+    if (!localVideoStream) return;
+    var recordingSession = {
+        audio: true,
+        video: true
+    };
+    var button = this;
+    if (button.innerHTML == 'Record Audio/Video') {
+        button.innerHTML = 'Stop Recording Audio/Video';
+        localVideoStream.startRecording(recordingSession);
+    } else if (button.innerHTML == 'Stop Recording Audio/Video') {
+        localVideoStream.stopRecording(function(blobs) {
+            document.getElementById('msg').innerHTML ='Audio blob size in bytes: ' + blobs.audio.size;
+            document.getElementById('msg').innerHTML ='Video blob size in bytes: ' + blobs.video.size;
+            button.innerHTML = 'Record Audio/Video';
+        }, recordingSession);
+    }
+};
+</script>
+<style>
+video {
+    width: 30%;
+}
+button {
+    font-family: Myriad, Arial, Verdana;
+    font-weight: normal;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+    padding: 4px 12px;
+    text-decoration: none;
+    color: rgb(27, 26, 26);
+    display: inline-block;
+    box-shadow: rgb(255, 255, 255) 1px 1px 0px 0px inset;
+    text-shadow: none;
+    background: -webkit-gradient(linear, 0% 0%, 0% 100%, color-stop(0.05, rgb(241, 241, 241)), to(rgb(230, 230, 230)));
+    font-size: 20px;
+    border: 1px solid red;
+}
+button[disabled] {
+    background: rgba(216, 205, 205, 0.2);
+    border: 1px solid rgb(233, 224, 224);
+}
+</style>
+<div id="msg"></div>
+<video id="video" width="320" height="240" controls></video>
+</html>

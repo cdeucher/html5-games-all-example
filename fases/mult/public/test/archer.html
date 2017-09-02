@@ -1,0 +1,69 @@
+<!doctype html>
+<html>
+	<head>
+    <script type="text/javascript" src="../lib/phaser.2.0.7.min.js"></script>
+    </head>
+    <body>
+      <script>
+			var game  = new Phryan.Game(1200, 600, Phryan.CANVAS, 'game', { preload: preload, create: create, update: update, render: render });
+			var t1,t2;
+      function preload(){
+				game.load.atlas('sol01',  '../img/enemy/archer.png', '../map/sol02.json');
+			}
+			function create() {
+			   game.physics.startSystem(Phryan.Physics.ARCADE);
+         game.stage.backgroundColor = 0xffffff;
+			   game.world.setBounds(0, 0, 1280, 600);
+
+
+         t1 = game.add.sprite(200,100, 'sol01','walk0');
+				 t1 = game.add.sprite(200,200, 'sol01','walk1');
+				 t1 = game.add.sprite(200,300, 'sol01','walk2');
+				 t1 = game.add.sprite(200,400, 'sol01','walk3');
+
+         t1 = game.add.sprite(300,300, 'sol01',0);
+				 t1.animations.add('walk', [0,1,2,3], 4, true);
+				 t1.animations.play('walk');
+
+				 t2 = game.add.sprite(400,100, 'sol01','atk0');
+				 t2 = game.add.sprite(400,200, 'sol01','atk1');
+				 t2 = game.add.sprite(400,300, 'sol01','atk2');
+				 t2 = game.add.sprite(400,400, 'sol01','atk2');
+
+         t2 = game.add.sprite(500,300, 'sol01',0);
+				 t2.animations.add('atk', [4,5,6,7], 2, true);
+				 t2.animations.play('atk');
+
+
+         t1 = game.add.sprite(700,100, 'sol01','2walk0');
+ 				 t1 = game.add.sprite(700,200, 'sol01','2walk1');
+ 				 t1 = game.add.sprite(700,300, 'sol01','2walk2');
+ 				 t1 = game.add.sprite(700,400, 'sol01','2walk3');
+
+         t1 = game.add.sprite(800,300, 'sol01',0);
+ 				 t1.animations.add('walk', ['2walk0','2walk1','2walk2','2walk3'], 4, true);
+ 				 t1.animations.play('walk');
+
+ 				 t1 = game.add.sprite(900,100, 'sol01','2atk0');
+ 				 t2 = game.add.sprite(900,200, 'sol01','2atk1');
+ 				 t2 = game.add.sprite(900,300, 'sol01','2atk2');
+ 				 tx = game.add.sprite(900,400, 'sol01','2atk3');
+
+         game.physics.enable( [ tx ], Phryan.Physics.ARCADE);
+         t2 = game.add.sprite(1000,300, 'sol01',0);
+ 				 t2.animations.add('atk', ['2atk0','2atk1','2atk2','2atk3'], 2, true);
+ 				 t2.animations.play('atk');
+
+
+				 game.physics.enable( [ t1,t2 ], Phryan.Physics.ARCADE);
+			}
+			function update() {
+			}
+			function render() {
+        game.debug.body(tx);
+        game.debug.body(t2);
+        game.debug.body(t1);
+			}
+			</script>
+    </body>
+</html>

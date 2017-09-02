@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+   <head>
+    <script src="socket.io/socket.io.js"></script>
+    <script type="text/javascript" src="conf.js"></script>
+    <script type="text/javascript" src="lib/phryan.js"></script>
+    <script type="text/javascript" src="lib/mini.js"></script>
+    <script type="text/javascript" src="lib/villa.js"></script>
+    <script type="text/javascript" src="lib/supplies.js"></script>
+    <script type="text/javascript" src="lib/menu.js"></script>
+    <script type="text/javascript" src="lib/spin.js"></script>
+    <script type="text/javascript" src="lib/letter.js"></script>
+    <script type="text/javascript" src="lib/soldier.js"></script>
+    <script type="text/javascript" src="lib/boot.js"></script>
+   </head>
+  <body>
+     <script>
+        function bootlogin(){
+          boot = new Boot();
+          boot.logout();
+          boot.login();
+          //boot.create();
+        }
+        function logout(){
+          boot.logout();
+        }
+        function clear(){
+          boot.clear();
+        }
+        bootlogin();
+     </script>
+     <input type="text" id="room" value="room">
+     <input type="button" value="Login" onclick="bootlogin()">
+     <input type="button" value="Logout" onclick="logout()">
+     <input type="button" value="clear" onclick="clear()">
+  </body>
+</html>

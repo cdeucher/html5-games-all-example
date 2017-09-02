@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <title>HAMMER</title>
+</head>
+  <body>
+    <!-- bar -->
+    <div id="bar"></div>
+    <!-- game -->
+    <div id="game"></div>
+    <input type="button" value="Map" onclick="week.get('hamer').set('levelMap');">
+    <input type="button" value="FASE0" onclick="week.get('hamer').set('level0');">
+    <input type="button" value="FASE1" onclick="week.get('hamer').set('level1');">
+    <input type="button" value="FASE2" onclick="week.get('hamer').set('level2');">
+    <input type="button" value="FASE3" onclick="week.get('hamer').set('level3');">
+    <input type="button" value="FULLSCREEN" onclick="week.get('touch').full();">
+    <!-- JavaScript -->
+    <script src="socket.io/socket.io.js"></script>
+    <script type="text/javascript" src="engine/base/phaser.min.js"></script>
+    <script type="text/javascript" src="engine/base/jquery-1.10.2.js"></script>
+    <!-- Game -->
+    <script type="text/javascript" src="engine/plugin/base/tools.js"></script>
+    <script type="text/javascript" src="engine/plugin/base/warrior.js"></script>
+    <script type="text/javascript" src="engine/base/tools.js"></script>
+    <script type="text/javascript" src="engine/base/data.js"></script>
+    <script type="text/javascript" src="engine/base/enemy.js"></script>
+    <script type="text/javascript" src="engine/plugin/map.js"></script>
+    <script type="text/javascript" src="engine/plugin/balista.js"></script>
+    <script type="text/javascript" src="engine/plugin/archer.js"></script>
+    <script type="text/javascript" src="engine/plugin/germanos.js"></script>
+    <script type="text/javascript" src="engine/plugin/romanos.js"></script>
+    <script type="text/javascript" src="engine/game.js"></script>
+  </body>
+</html>

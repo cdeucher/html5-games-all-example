@@ -1,0 +1,29 @@
+{"frames": [
+
+{
+	"filename": "villa1",
+	"frame": {"x":205,"y":0,"w":110,"h":150},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":120,"h":135},
+	"sourceSize": {"w":120,"h":135}
+},
+{
+	"filename": "villa2",
+	"frame": {"x":95,"y":0,"w":110,"h":150},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":120,"h":135},
+	"sourceSize": {"w":120,"h":135}
+}
+],
+"meta": {
+	"app": "#",
+	"version": "1.0",
+	"image": "villa_orda.png",
+	"format": "RGBA8888",
+	"size": {"w":244,"h":108},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:99b2f74fa157c5b63e72b0d68be078b4:1/1$"
+}
+}

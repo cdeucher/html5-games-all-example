@@ -1,0 +1,84 @@
+<!doctype html>
+<html>
+	<head>
+    <script type="text/javascript" src="../lib/phaser.2.0.7.min.js"></script>
+    </head>
+    <body>
+      <script>
+			var game  = new Phryan.Game(900, 600, Phryan.CANVAS, 'game', { preload: preload, create: create, update: update, render: render });
+			var skill = undefined;
+			var sprite,t1,t2,t3,tx,cursors;
+			function preload() {
+			  game.load.tilemap('map', '../map/street2.json', null, Phryan.Tilemap.TILED_JSON);
+			  //game.load.spritesheet('mini','img/scorched_earth.png',128,128);
+			  game.load.image('chao', '../img/hyptosis_tile-art-batch-1.png');
+			  game.load.spritesheet('bat', '../img/bat.png',64,64);
+			  //soldiers
+			  game.load.atlas('soldier', '../img/ryu/ryu.gif',         '../map/soldier.json');
+			  game.load.atlas('sir',     '../img/ryu/ryu2.gif',        '../map/sir.json');
+			  game.load.atlas('knight',  '../img/ryu/knight.gif',      '../map/k.json');
+			  game.load.atlas('boss',    '../img/enemy/boss.png',      '../map/boss.json');
+			  game.load.atlas('enemy',   '../img/enemy/enemy.png',     '../map/enemy.json');
+			  game.load.atlas('dragon',  '../img/enemy/reddragon.png', '../map/dragon.json');
+				game.load.atlas('sol01',  '../img/enemy/sol01.png', '../map/sol01.json');
+			  //villa
+			  game.load.atlas('villa_orda',  '../img/home/villa_orda.png', '../map/villa_orda.json');
+			  //icons
+			  game.load.atlas('battle',  '../img/icons/battle.png', '../map/battle.json');
+			}
+
+			function create() {
+			   game.physics.startSystem(Phryan.Physics.ARCADE);
+			   game.world.setBounds(0, 0, 1280, 600);
+			   map = game.add.tilemap('map');
+			   map.addTilesetImage('chao');
+			   layer = map.createLayer('chao');
+			   layer.resizeWorld();
+
+				 cursors = game.input.keyboard.createCursorKeys();
+
+				 tx = game.add.sprite(250,100, 'sir',0);
+         	tx.name = 'tx';
+
+				 t3 = game.add.sprite(400,400, 'sol01','atk3');
+				 	t3.name = 't3';
+
+         game.physics.enable( [ tx, t3 ], Phryan.Physics.ARCADE);
+
+				 t3.body.enable = true;
+         t3.body.setSize(120, 120,0,0);
+				 tx.body.enable = true;
+				 tx.body.setSize(60,60,0,0);
+
+			   //game.time.advancedTiming = true;
+			   fpsText = game.add.text(20, 50, '', { font: '16px Arial', fill: '#fff' });
+			   fpsText.fixedToCamera = true
+			}
+			function update() {
+				movex();
+			    //game.physics.arcade.collide(tx, t3, collisionHandler, null, this);
+					game.physics.arcade.overlap(tx, t3, collisionHandler, null, this);
+			}
+			function collisionHandler (obj1, obj2) {
+			    game.stage.backgroundColor = '#992d2d';
+					console.log(12);
+			}
+			function render() {
+			    game.debug.body(tx);
+			    game.debug.body(t3);
+			}
+			function movex(){
+				if (cursors.left.isDown){
+			      t3.body.x -= 4;
+			  }else if (cursors.right.isDown){
+			      t3.body.x += 4;
+			  }
+				if (cursors.up.isDown){
+			      t3.body.y -= 4;
+			  }else if (cursors.down.isDown){
+			      t3.body.y += 4;
+			  }
+			}
+			</script>
+    </body>
+</html>
